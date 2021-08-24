@@ -34,6 +34,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Tranferências'),
+       backgroundColor: Colors.green,
+
       ),
 
       floatingActionButton: FloatingActionButton(
