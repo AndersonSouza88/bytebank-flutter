@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 void main() {
@@ -6,26 +5,41 @@ void main() {
 }
 
 class Bytebank extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-          body:FormularioTransferencia(),
-        )
+      home: Scaffold(
+        body: FormularioTransferencia(),
+      ),
     );
   }
 }
-
 
 class FormularioTransferencia extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Criando Transferência'),
+        title: Text('Criando Transferências'),
       ),
-      body: Text('Teste '),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              style: TextStyle(
+                fontSize: 24.0,
+              ),
+              decoration: InputDecoration(
+                labelText: 'Numero da Conta',
+                hintText: '0000',
+              ),
+              keyboardType: TextInputType.number,
+            ),
+          ),
+          TextField(),
+        ],
+      ),
     );
   }
 }
@@ -33,7 +47,6 @@ class FormularioTransferencia extends StatelessWidget {
 class ListaDeTransferencia extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -46,7 +59,6 @@ class ListaDeTransferencia extends StatelessWidget {
             ItemTransferencia(Transferencia(3000, 3003)),
           ],
         ),
-
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
           child: Icon(Icons.add),
@@ -55,22 +67,18 @@ class ListaDeTransferencia extends StatelessWidget {
     );
   }
 }
+
 class Transferencia {
   final double valor;
   final int numeroConta;
 
   Transferencia(this.valor, this.numeroConta);
 }
+
 class ItemTransferencia extends StatelessWidget {
   final Transferencia _transferencia;
 
-
   ItemTransferencia(this._transferencia);
-
-  /*final String valor;
-  final String numeroConta;
-
-  ItemTransferencia(this.valor, this.numeroConta);*/
 
   @override
   Widget build(BuildContext context) {
