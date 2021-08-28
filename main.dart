@@ -16,6 +16,9 @@ class Bytebank extends StatelessWidget {
 }
 
 class FormularioTransferencia extends StatelessWidget {
+  final TextEditingController _controllerNumeroConta = TextEditingController();
+  final TextEditingController _controllerCampoValor = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +30,7 @@ class FormularioTransferencia extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
+              controller: _controllerNumeroConta,
               style: TextStyle(
                 fontSize: 24.0,
               ),
@@ -37,7 +41,40 @@ class FormularioTransferencia extends StatelessWidget {
               keyboardType: TextInputType.number,
             ),
           ),
-          TextField(),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              controller: _controllerCampoValor,
+              style: TextStyle(
+                fontSize: 24.0,
+              ),
+              decoration: InputDecoration(
+                icon: Icon(Icons.monetization_on),
+                labelText: 'Valor',
+                hintText: '0.00',
+              ),
+              keyboardType: TextInputType.number,
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              debugPrint('clicou no confirmar');
+
+              //debugPrint(_controllerNumeroConta.text);
+              //debugPrint(_controllerCampoValor.text);
+              //final transferenciaCriada = Transferencia(valor,numeroConta);
+
+              final  numeroConta = int.tryParse(_controllerNumeroConta.text);
+              final  valor = double.tryParse(_controllerCampoValor.text);
+
+              if(numeroConta != null  && valor != null){
+               final transferenciaCriada =  Transferencia(valor, numeroConta);
+               debugPrint('$transferenciaCriada');
+
+              }
+            },
+            child: Text('Confirmar'),
+          ),
         ],
       ),
     );
@@ -73,6 +110,11 @@ class Transferencia {
   final int numeroConta;
 
   Transferencia(this.valor, this.numeroConta);
+
+  @override
+  String toString() {
+    return 'Transferencia{valor: $valor, numeroConta: $numeroConta}';
+  }
 }
 
 class ItemTransferencia extends StatelessWidget {
