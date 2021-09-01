@@ -26,44 +26,39 @@ class FormularioTransferencia extends StatelessWidget {
         title: Text('Criando Transferência'),
       ),
       body: Column(
-        children: [
-          Editor(
-            _controllerNumeroConta,
-            'Número da Conta',
+        children: <Widget>[
+          Editor(//numero da conta
+             _controllerNumeroConta,
+             'Número da Conta',
             '000',
-            null,
           ),
-          Editor(
-            _controllerValor,
-            'Valor',
+          Editor(//valor
+             _controllerValor,
+             'Valor',
             '0.00',
-            Icons.monetization_on,
+            icone: Icons.monetization_on,
           ),
           ElevatedButton(
-            onPressed: () {
-              debugPrint('Clicou em confirmar');
-              // debugPrint(_controllerNumeroConta.text);
-              // debugPrint(_controllerValor.text);
-              final valor = double.tryParse(_controllerValor.text);
-              debugPrint('$valor');
-              final numeroConta = int.tryParse(_controllerNumeroConta.text);
-
-              if (numeroConta != null && valor != null) {
-                //Transferencia(valor, numeroConta);
-                final transferenciaCriada = Transferencia(valor, numeroConta);
-                debugPrint('$transferenciaCriada');
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('$transferenciaCriada'),
-                  ),
-                );
-              }
-            },
+            onPressed: () => _criaTransferencia(context),
             child: Text('Confirmar'),
           ),
         ],
       ),
     );
+  }
+
+  void _criaTransferencia(BuildContext context) {
+    final valor = double.tryParse(_controllerValor.text);
+    final numeroConta = int.tryParse(_controllerNumeroConta.text);
+    if (numeroConta != null && valor != null) {
+      final transferenciaCriada = Transferencia(valor, numeroConta);
+      debugPrint('$transferenciaCriada');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('$transferenciaCriada'),
+        ),
+      );
+    }
   }
 }
 
@@ -128,26 +123,26 @@ class ItemTransferencia extends StatelessWidget {
 }
 
 class Editor extends StatelessWidget {
-  final TextEditingController _controller;
-  final String _rotulo;
-  final String _dica;
-  final IconData? _icone;
+  final TextEditingController controlador;
+  final String rotulo;
+  final String dica;
+  final IconData? icone; // "?" permite acesso nulo
 
-  Editor(this._controller, this._rotulo, this._dica, this._icone);
+  Editor(this.controlador, this.rotulo, this.dica, {this.icone});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: TextField(
-        controller: _controller,
+        controller: controlador,
         style: TextStyle(
           fontSize: 24.0,
         ),
         decoration: InputDecoration(
-          icon: Icon(_icone),
-          labelText: _rotulo,
-          hintText: _dica,
+          icon: icone != null ? Icon(icone) : null,
+          labelText: rotulo,
+          hintText: dica,
         ),
         keyboardType: TextInputType.number,
       ),
