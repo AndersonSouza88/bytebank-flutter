@@ -9,7 +9,7 @@ class Bytebank extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: FormularioTransferencia(),
+        body: ListaTransferencia(),
       ),
     );
   }
@@ -27,14 +27,16 @@ class FormularioTransferencia extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          Editor(//numero da conta
-             _controllerNumeroConta,
-             'Número da Conta',
+          Editor(
+            //numero da conta
+            _controllerNumeroConta,
+            'Número da Conta',
             '000',
           ),
-          Editor(//valor
-             _controllerValor,
-             'Valor',
+          Editor(
+            //valor
+            _controllerValor,
+            'Valor',
             '0.00',
             icone: Icons.monetization_on,
           ),
@@ -53,6 +55,7 @@ class FormularioTransferencia extends StatelessWidget {
     if (numeroConta != null && valor != null) {
       final transferenciaCriada = Transferencia(valor, numeroConta);
       debugPrint('$transferenciaCriada');
+      Navigator.pop(context, transferenciaCriada);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('$transferenciaCriada'),
@@ -70,16 +73,47 @@ class ListaTransferencia extends StatelessWidget {
         appBar: AppBar(
           title: Text('Transferência'),
         ),
-        body: Column(
+        body: ListView(
           children: [
             ItemTransferencia(Transferencia(123.45, 1000)),
             ItemTransferencia(Transferencia(567.89, 2000)),
             ItemTransferencia(Transferencia(901.23, 3000)),
+            ItemTransferencia(Transferencia(901.23, 3000)),
+            ItemTransferencia(Transferencia(901.23, 3000)),
+            ItemTransferencia(Transferencia(901.23, 3000)),
+            ItemTransferencia(Transferencia(901.23, 3000)),
+            ItemTransferencia(Transferencia(901.23, 3000)),
+            ItemTransferencia(Transferencia(901.23, 3000)),
+            ItemTransferencia(Transferencia(901.23, 3000)),
+            ItemTransferencia(Transferencia(901.23, 3000)),
+            ItemTransferencia(Transferencia(901.23, 3000)),
+            ItemTransferencia(Transferencia(901.23, 3000)),
+            ItemTransferencia(Transferencia(901.23, 3000)),
+            ItemTransferencia(Transferencia(901.23, 3000)),
+            ItemTransferencia(Transferencia(901.23, 3000)),
+            ItemTransferencia(Transferencia(901.23, 3000)),
+            ItemTransferencia(Transferencia(901.23, 3000)),
+            ItemTransferencia(Transferencia(901.23, 3000)),
+            ItemTransferencia(Transferencia(901.23, 3000)),
+            ItemTransferencia(Transferencia(901.23, 3000)),
+            ItemTransferencia(Transferencia(901.23, 3000)),
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
           child: Icon(Icons.add),
+          onPressed: () {
+            final Future<Transferencia?> future = Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) {
+                return FormularioTransferencia();
+              }),
+            );
+            future.then((transferenciaRecebida){
+              debugPrint('chegou carai');
+              debugPrint('$transferenciaRecebida');
+
+            });
+          },
         ),
       ),
     );
